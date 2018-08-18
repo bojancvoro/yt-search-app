@@ -3,15 +3,18 @@ import React, { Component } from "react";
 class SearchBar extends Component {
     constructor(props) {
         super(props);
+        this.state = { term: "" }
+        this.onInputChange = this.handleInputChange.bind(this);
     }
 
-    onInputChange(e) {
-        console.log(e.target.value);
+    handleInputChange = (e) => {
+        const term = e.target.value;
+        this.props.handleInputChange(term);
     }
 
     render() {
         return (
-            <input onChange={this.onInputChange} />
+            <input onChange={this.handleInputChange} />
         )
     }
 }
