@@ -3,23 +3,18 @@ import './App.css';
 import SearchBar from "./components/searchBar";
 import YTSearch from "youtube-api-search";
 import VideoList from "./components/videoList";
+import VideoDetail from "./components/videoDetail";
 
 const API_KEY = "AIzaSyBi7EAtEStmQGLF_vM2p_Et1aLGvkBgeMM";
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { videos: [], searchTerm: "" }
+    this.state = { videos: [] }
   }
 
   handleInputChange = (searchTerm) => {
-    this.setState({ searchTerm });
-    console.log(searchTerm);
-  }
-
-  componentDidMount() {
-    // takes object with key and term properties and callback that takes returned data (videos)
-    YTSearch({ key: API_KEY, term: "surf" }, (videos) => {
+    YTSearch({ key: API_KEY, term: searchTerm }, (videos) => {
       this.setState( { videos } );
     });
   }
@@ -28,6 +23,7 @@ class App extends Component {
     return (
       <div className="App">
         <SearchBar handleInputChange={this.handleInputChange} />
+        <VideoDetail video={this.state.videos[0]} />
         <VideoList videos={this.state.videos} />
       </div>
     );
